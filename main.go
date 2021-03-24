@@ -8,12 +8,15 @@ import (
 )
 
 func main() {
-	f, _ := os.Open("./input.txt")
+	// data, _ := ioutil.ReadAll(os.Stdin)
+	// os.WriteFile("./input-kitchent.txt", data, os.ModePerm)
+
+	data, _ := os.Open("./input-kitchent.txt")
 	pgs.Init(
-		pgs.ProtocInput(f),
+		pgs.ProtocInput(data),
 	).RegisterModule(
 		ASTPrinter(),
-		JSONify(),
+		// JSONify(),
 	).RegisterPostProcessor(
 		pgsgo.GoFmt(),
 	).Render()
