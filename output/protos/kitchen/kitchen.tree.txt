@@ -1,0 +1,39 @@
+┳ File: protos/kitchen/kitchen.proto
+┣┳ Enum: Style
+┃┣━ CONTEMPORARY
+┃┣━ COTTAGE_CHARM
+┃┣━ MEDITERRANEAN
+┃┣━ COASTAL
+┃┣━ OLD_WORLD
+┃┣━ TRADITIONAL
+┣┳ Message: Kitchen
+┃┣━ style
+┃┣━ sink
+┃┣━ utensils
+┃┣━ dish_counts
+┃┣━ wall_colors
+┃┣━ appliance_colors
+┣┳ Message: Color
+┃┣┳ Message: RGB
+┃┃┣━ r
+┃┃┣━ g
+┃┃┣━ b
+┃┣┳ Message: CMYK
+┃┃┣━ c
+┃┃┣━ m
+┃┃┣━ y
+┃┃┣━ k
+┃┣━ pantone
+┃┣━ rgb
+┃┣━ cmyk
+┃┣━ alpha
+┣┳ Message: SauteRequest
+┣┳ Message: SauteResponse
+┣┳ Message: IceRequest
+┣┳ Message: IceResponse
+┣┳ Message: GroceryItem
+┣┳ Message: LoadSummary
+┣┳ Message: DrinkOrder
+┣┳ Message: PreparedDrink
+┣┳ Service: Cooking
+┃┣━ OrderDrinks

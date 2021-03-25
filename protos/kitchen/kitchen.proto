@@ -52,7 +52,7 @@ message Color {
 
 service Cooking {
     rpc OrderDrinks(stream DrinkOrder) returns (stream PreparedDrink){
-        option (base.my_option) = "ahihi";
+        // option (base.my_option) = "ahihi";
     }
 }
 
