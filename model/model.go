@@ -32,3 +32,8 @@ type Enum struct {
 	Name     string
 	TypeName string
 }
+
+type Import struct {
+	PackageName string
+	PackagePath string
+}
