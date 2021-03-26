@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"protoc-gen-rest/plugin"
 	"protoc-gen-rest/plugin/ts"
 
 	pgs "github.com/lyft/protoc-gen-star"
@@ -10,6 +9,11 @@ import (
 )
 
 func main() {
+	//for debug
+	// write data input to file for debug
+	// data, _ := ioutil.ReadAll(os.Stdin)
+	// ioutil.WriteFile("./input-kitchent.txt", data, 0644)
+
 	// pgs.Init(
 	// 	pgs.ProtocInput(os.Stdin),
 	// ).RegisterModule(
@@ -19,14 +23,10 @@ func main() {
 	// 	pgsgo.GoFmt(),
 	// ).Render()
 
-	//for debug
-	// write data input to file for debug
-	// data, _ := ioutil.ReadAll(os.Stdin)
 	f, _ := os.Open("./input-kitchent.txt")
 	pgs.Init(
 		pgs.ProtocInput(f),
 	).RegisterModule(
-		plugin.ASTPrinter(),
 		ts.JSONify(),
 	).RegisterPostProcessor(
 		pgsgo.GoFmt(),

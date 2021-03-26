@@ -11,6 +11,7 @@ const (
 type Message struct {
 	Name   string
 	Fields []Field
+	IsEnum bool
 }
 
 type Field struct {

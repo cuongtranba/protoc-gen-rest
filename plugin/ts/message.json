@@ -1,0 +1,168 @@
+[{
+        "Name": "Kitchen",
+        "Fields": [{
+                "Name": "style",
+                "TypeName": "Style",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": true
+            },
+            {
+                "Name": "sink",
+                "TypeName": "*Sink",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "utensils",
+                "TypeName": "[]string",
+                "IsOption": true,
+                "IsRepeated": true,
+                "IsEnum": false
+            },
+            {
+                "Name": "dish_counts",
+                "TypeName": "map[string]uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "wall_colors",
+                "TypeName": "[]*Color",
+                "IsOption": true,
+                "IsRepeated": true,
+                "IsEnum": false
+            },
+            {
+                "Name": "appliance_colors",
+                "TypeName": "map[string]*Color",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            }
+        ]
+    },
+    {
+        "Name": "Color",
+        "Fields": [{
+                "Name": "pantone",
+                "TypeName": "string",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "rgb",
+                "TypeName": "*Color_RGB",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "cmyk",
+                "TypeName": "*Color_CMYK",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "alpha",
+                "TypeName": "float64",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            }
+        ]
+    },
+    {
+        "Name": "SauteRequest",
+        "Fields": null
+    },
+    {
+        "Name": "SauteResponse",
+        "Fields": null
+    },
+    {
+        "Name": "IceRequest",
+        "Fields": null
+    },
+    {
+        "Name": "IceResponse",
+        "Fields": null
+    },
+    {
+        "Name": "GroceryItem",
+        "Fields": null
+    },
+    {
+        "Name": "LoadSummary",
+        "Fields": null
+    },
+    {
+        "Name": "DrinkOrder",
+        "Fields": null
+    },
+    {
+        "Name": "PreparedDrink",
+        "Fields": null
+    },
+    {
+        "Name": "RGB",
+        "Fields": [{
+                "Name": "r",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "g",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "b",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            }
+        ]
+    },
+    {
+        "Name": "CMYK",
+        "Fields": [{
+                "Name": "c",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "m",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "y",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            },
+            {
+                "Name": "k",
+                "TypeName": "uint32",
+                "IsOption": true,
+                "IsRepeated": false,
+                "IsEnum": false
+            }
+        ]
+    }
+]
