@@ -5,7 +5,6 @@ import (
 	"strings"
 	"text/template"
 
-	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 	"google.golang.org/protobuf/types/descriptorpb"
 
 	pgs "github.com/lyft/protoc-gen-star"
@@ -43,7 +42,6 @@ var tsTypeMap = map[descriptorpb.FieldDescriptorProto_Type]tsType{
 // See: https://godoc.org/github.com/golang/protobuf/jsonpb
 type TsModule struct {
 	*pgs.ModuleBase
-	ctx pgsgo.Context
 	tpl *template.Template
 }
 
@@ -64,8 +62,6 @@ func TsGen() *TsModule {
 
 func (p *TsModule) InitContext(c pgs.BuildContext) {
 	p.ModuleBase.InitContext(c)
-	p.ctx = pgsgo.InitContext(c.Parameters())
-
 	tpl := template.New("ts-convert")
 	p.tpl = template.Must(tpl.Parse(tsTemplate))
 }
@@ -121,11 +117,21 @@ func (p *TsModule) generate(f pgs.File) {
 
 	for _, packageImport := range f.Imports() {
 		templateData.Imports = append(templateData.Imports, model.Import{
-			PackagePath: packageImport.File().InputPath().SetExt(".d.ts").String(),
+			PackagePath: packageImport.File().InputPath().SetExt("").String(),
 			PackageName: packageImport.Package().ProtoName().String(),
 		})
 	}
 
-	name := p.ctx.OutputPath(f).SetExt(".d.ts")
-	p.AddGeneratorTemplateFile(name.String(), p.tpl, templateData)
+	for _, enum := range f.Enums() {
+		enumModel := model.Enum{
+			Name: enum.Name().String(),
+		}
+		for _, field := range enum.Values() {
+			enumModel.Fields = append(enumModel.Fields, field.Name().String())
+		}
+		templateData.Enums = append(templateData.Enums, enumModel)
+	}
+
+	name := f.InputPath().SetExt(".d.ts").String()
+	p.AddGeneratorTemplateFile(name, p.tpl, templateData)
 }

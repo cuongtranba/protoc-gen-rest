@@ -22,4 +22,12 @@ export interface {{ .Name}} {
   {{- end}}
 }
 {{- end}}
+
+{{- range .Enums}}
+export enum {{.Name}}{
+  {{- range .Fields}}
+    {{.}},
+  {{- end}}
+}
+{{- end}}
 `

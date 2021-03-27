@@ -29,10 +29,9 @@ type Service struct {
 }
 
 type Enum struct {
-	Name     string
-	TypeName string
+	Name   string
+	Fields []string
 }
-
 type Import struct {
 	PackageName string
 	PackagePath string
