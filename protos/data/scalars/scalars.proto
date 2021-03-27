@@ -1,5 +1,6 @@
 syntax="proto3";
 import "protos/data/student/student.proto";
+import "protos/kitchen/custom_option.proto";
 package scalars;
 
 message Scalars {
@@ -34,4 +35,16 @@ enum UserType {
     Worker = 0;
     Man = 1;
     Woman = 3;
+}
+
+message GetUserListRequest {
+}
+
+message GetUserListResponse {
+}
+
+service UserService {
+    rpc GetUserList (GetUserListRequest) returns (GetUserListResponse){
+        option (base.my_option)="test";
+    }
 }

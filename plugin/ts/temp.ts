@@ -1,3 +1,4 @@
+import { AxiosAdapter, AxiosInstance, AxiosResponse } from "axios";
 import * as student from "./student";
 export interface Scalars {
   double: number;
@@ -24,3 +25,14 @@ export interface User {
   Name: string;
   Age: string;
 }
+
+export const getUser = (client: AxiosInstance) => async (
+  request: User
+): Promise<AxiosResponse<Scalars>> => {
+  const result = await client.post("/getuser", request);
+  return result.data;
+};
+
+export const UserService = (client: AxiosInstance) => {
+  getUser: getUser(client);
+};

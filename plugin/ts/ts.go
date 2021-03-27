@@ -37,9 +37,6 @@ var tsTypeMap = map[descriptorpb.FieldDescriptorProto_Type]tsType{
 	descriptorpb.FieldDescriptorProto_TYPE_SINT64:   TsTypeNumber,
 }
 
-// JSONifyPlugin adds encoding/json Marshaler and Unmarshaler methods on PB
-// messages that utilizes the more correct jsonpb package.
-// See: https://godoc.org/github.com/golang/protobuf/jsonpb
 type TsModule struct {
 	*pgs.ModuleBase
 	tpl *template.Template
@@ -130,6 +127,22 @@ func (p *TsModule) generate(f pgs.File) {
 			enumModel.Fields = append(enumModel.Fields, field.Name().String())
 		}
 		templateData.Enums = append(templateData.Enums, enumModel)
+	}
+
+	for _, service := range f.Services() {
+		serviceModel := model.Service{
+			Name: service.Name().String(),
+		}
+		for _, method := range service.Methods() {
+			methodModel := model.Method{
+				Name:     method.Name().String(),
+				Request:  method.Input().Name().String(),
+				Response: method.Output().Name().String(),
+				Url:      method.FullyQualifiedName(),
+			}
+			serviceModel.Methods = append(serviceModel.Methods, methodModel)
+		}
+		templateData.Services = append(templateData.Services, serviceModel)
 	}
 
 	name := f.InputPath().SetExt(".d.ts").String()

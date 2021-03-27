@@ -22,6 +22,11 @@ type Field struct {
 }
 
 type Service struct {
+	Name    string
+	Methods []Method
+}
+
+type Method struct {
 	Name     string
 	Request  string
 	Response string

@@ -30,4 +30,23 @@ export enum {{.Name}}{
   {{- end}}
 }
 {{- end}}
+
+{{- range .Services}}
+	{{- range .Methods}}	
+	const {{.Name}} = (client: AxiosInstance) => async (
+		request: {{.Request}}
+	): Promise<AxiosResponse<{{.Response}}>> => {
+		const result = await client.post("/{{.Url}}", request);
+		return result.data;
+	};
+	{{- end}}
+{{- end}}
+
+{{- range $i, $service := .Services}}
+	{{- range .Methods}}
+	export const {{$service.Name}} = (client: AxiosInstance) => {
+		{{.Name}}: {{.Name}}(client);
+	};
+	{{- end}}
+{{- end}}
 `
