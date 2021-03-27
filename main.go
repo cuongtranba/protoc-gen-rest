@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"protoc-gen-rest/parse"
 	"protoc-gen-rest/plugin/ts"
 
 	pgs "github.com/lyft/protoc-gen-star"
@@ -20,10 +21,11 @@ func main() {
 	// 	ts.TsGen(),
 	// ).RegisterPostProcessor().Render()
 
+	tsParser := parse.NewTsParser()
 	f, _ := os.Open(".scalars.txt")
 	pgs.Init(
 		pgs.ProtocInput(f),
 	).RegisterModule(
-		ts.TsGen(),
+		ts.TsGen(tsParser),
 	).RegisterPostProcessor().Render()
 }

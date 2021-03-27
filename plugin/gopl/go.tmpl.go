@@ -1,0 +1,5 @@
+package gopl
+
+var goTemplate = `
+
+`

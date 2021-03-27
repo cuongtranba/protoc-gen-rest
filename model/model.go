@@ -1,12 +1,14 @@
 package model
 
-type DataType int
+import "google.golang.org/protobuf/types/descriptorpb"
 
-const (
-	MessageType DataType = iota + 1
-	MethodType
-	EnumType
-)
+type TemplateData struct {
+	ProtoFileName string
+	Messages      []Message
+	Enums         []Enum
+	Services      []Service
+	Imports       []Import
+}
 
 type Message struct {
 	Name   string
@@ -40,4 +42,31 @@ type Enum struct {
 type Import struct {
 	PackageName string
 	PackagePath string
+}
+
+type TsType string
+
+const (
+	TsTypeNumber  TsType = "number"
+	TsTypeBoolean TsType = "boolean"
+	tsTypebytes   TsType = "number[]"
+	tsTypeString  TsType = "string"
+)
+
+var TsTypeMap = map[descriptorpb.FieldDescriptorProto_Type]TsType{
+	descriptorpb.FieldDescriptorProto_TYPE_DOUBLE:   TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_FLOAT:    TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_INT32:    TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_INT64:    TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_UINT32:   TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_UINT64:   TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_SINT32:   TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_SFIXED64: TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_FIXED32:  TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_FIXED64:  TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_SFIXED32: TsTypeNumber,
+	descriptorpb.FieldDescriptorProto_TYPE_BOOL:     TsTypeBoolean,
+	descriptorpb.FieldDescriptorProto_TYPE_BYTES:    tsTypebytes,
+	descriptorpb.FieldDescriptorProto_TYPE_STRING:   tsTypeString,
+	descriptorpb.FieldDescriptorProto_TYPE_SINT64:   TsTypeNumber,
 }
