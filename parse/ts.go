@@ -38,7 +38,7 @@ func (ts *TsParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 			field := model.Field{
 				Name:       fieldDescriptor.GetName(),
 				TypeName:   string(protoTypeToTsType(protoField)),
-				IsOption:   fieldDescriptor.GetProto3Optional(),
+				IsOption:   model.IsNullable(protoField),
 				IsRepeated: protoField.Type().IsRepeated(),
 			}
 			fields = append(fields, field)

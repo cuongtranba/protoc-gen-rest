@@ -19,6 +19,7 @@ type Message struct {
 type Field struct {
 	Name       string
 	TypeName   string
+	Tag        string
 	IsOption   bool
 	IsRepeated bool
 }
@@ -49,7 +50,7 @@ type TsType string
 const (
 	TsTypeNumber  TsType = "number"
 	TsTypeBoolean TsType = "boolean"
-	tsTypebytes   TsType = "number[]"
+	tsTypebytes   TsType = "Int8Array"
 	tsTypeString  TsType = "string"
 )
 

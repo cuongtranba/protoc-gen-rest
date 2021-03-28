@@ -10,6 +10,7 @@ type UserRequest struct {
 }
 
 type UserResponse struct {
+	UserName string `json:"UserName"`
 }
 
 type UserHandler interface {
@@ -36,5 +37,13 @@ func NewUserHandler(e *echo.Echo, userHandler UserHandler) {
 }
 
 var goTemplate = `
-
+package {{. ProtoFileName}} 
+// messages
+{{-	range .Messages}}
+type {{.Name}} struct {
+	{{-	range .Fields}}
+	{{.Name}} {{.TypeName}} {{.Tag}}
+	{{-	end}}
+}
+{{end}}
 `
