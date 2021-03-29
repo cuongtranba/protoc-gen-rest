@@ -1,6 +1,7 @@
 syntax="proto3";
 // import "protos/data/student/student.proto";
 import "protos/kitchen/custom_option.proto";
+import "protos/data/student/student.proto";
 package scalars;
 
 message Scalars {
@@ -24,6 +25,7 @@ message Scalars {
     // repeated User Users = 18;
     // repeated student.Student Student = 19;
     UserType UserType = 20 [(base.Nullable)=true];
+    student.Student Student = 21;
 }
 
 message User {

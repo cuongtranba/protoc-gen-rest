@@ -9,3 +9,6 @@ import (
 type Parser interface {
 	GetTemplateInfo(f pgs.File) model.TemplateData
 }
+
+type BaseParser struct {
+}

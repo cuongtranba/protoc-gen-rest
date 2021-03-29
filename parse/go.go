@@ -1,7 +1,9 @@
 package parse
 
 import (
+	"fmt"
 	"protoc-gen-rest/model"
+	"strings"
 
 	pgs "github.com/lyft/protoc-gen-star"
 	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
@@ -27,8 +29,11 @@ func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 				Name:       fieldDescriptor.GetName(),
 				IsOption:   model.IsNullable(protoField),
 				IsRepeated: protoField.Type().IsRepeated(),
-				TypeName:   string(goParser.ctx.Type(protoField)),
-				Tag:        string(goParser.ctx.Name(protoField).UpperCamelCase()),
+				TypeName:   strings.ReplaceAll(goParser.ctx.Type(protoField).String(), "*", ""),
+				Tag:        fmt.Sprintf("`%s`", model.Tag(protoField)),
+			}
+			if field.Tag == "``" {
+				field.Tag = ""
 			}
 			fields = append(fields, field)
 		}
@@ -41,9 +46,13 @@ func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 	}
 
 	for _, packageImport := range f.Imports() {
+		packageName := goParser.ctx.PackageName(packageImport)
+		if packageName == "base" {
+			continue
+		}
 		templateData.Imports = append(templateData.Imports, model.Import{
 			PackagePath: string(goParser.ctx.ImportPath(packageImport)),
-			PackageName: packageImport.Package().ProtoName().LowerCamelCase().String(),
+			PackageName: string(goParser.ctx.PackageName(packageImport)),
 		})
 	}
 

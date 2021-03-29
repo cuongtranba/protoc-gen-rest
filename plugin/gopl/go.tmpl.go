@@ -17,7 +17,7 @@ type UserHandler interface {
 	GetUserName(c echo.Context, request UserRequest) (err error, response UserResponse)
 }
 
-func NewUserHandler(e *echo.Echo, userHandler UserHandler) {
+func InitUserHandlerRouter(e *echo.Echo, userHandler UserHandler) {
 	e.POST("/abc", func(c echo.Context) error {
 		var model UserRequest
 		err := c.Bind(&model)
@@ -37,13 +37,41 @@ func NewUserHandler(e *echo.Echo, userHandler UserHandler) {
 }
 
 var goTemplate = `
-package {{. ProtoFileName}} 
+package {{	.ProtoFileName}}
+
+{{-	if ne (len .Imports) 0 }}
+import (
+	{{-	range .Imports}}
+	{{	.PackageName}}	{{	.PackagePath}}
+	{{-	end}}
+)
+{{-	end }}
+
+
+
 // messages
 {{-	range .Messages}}
 type {{.Name}} struct {
 	{{-	range .Fields}}
-	{{.Name}} {{.TypeName}} {{.Tag}}
+		{{- if .IsOption}}
+		{{.Name}} *{{.TypeName}} {{.Tag}}
+		{{- else if .IsRepeated}}
+		{{.Name}} {{.TypeName}}[] {{.Tag}}
+		{{- else}}
+		{{.Name}} {{.TypeName}} {{.Tag}}
+		{{- end}}
+	
 	{{-	end}}
 }
 {{end}}
+
+{{-	if ne (len .Services) 0 }}
+	{{-	range .Services}}
+		type {{	.Name}} interface {
+			{{-	range .Methods}}
+				{{.Name}}(c echo.Context, request {{.Request}}) (err error, response {{.Response}})
+			{{-	end}}
+		}
+	{{-	end}}
+{{-	end }}
 `

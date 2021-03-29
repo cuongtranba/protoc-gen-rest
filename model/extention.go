@@ -24,10 +24,10 @@ var (
 	}
 	CustomFieldExtention = protoimpl.ExtensionInfo{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
-		ExtensionType: (*bool)(nil),
+		ExtensionType: (*string)(nil),
 		Field:         51242,
 		Name:          "base.Custom",
-		Tag:           "varint,51243,opt,name=nullable",
+		Tag:           "bytes,51242,opt,name=custom",
 		Filename:      "base.proto",
 	}
 )
@@ -39,4 +39,13 @@ func IsNullable(f pgs.Field) bool {
 		return false
 	}
 	return ok && value
+}
+
+func Tag(f pgs.Field) string {
+	var value string
+	_, err := f.Extension(&CustomFieldExtention, &value)
+	if err != nil {
+		return ""
+	}
+	return value
 }
