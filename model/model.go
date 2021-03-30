@@ -4,6 +4,7 @@ import "google.golang.org/protobuf/types/descriptorpb"
 
 type TemplateData struct {
 	ProtoFileName string
+	GoPackageName string
 	Messages      []Message
 	Enums         []Enum
 	Services      []Service

@@ -2,15 +2,17 @@ package main
 
 import (
 	"os"
+	"protoc-gen-rest/parse"
 	"protoc-gen-rest/plugin/gopl"
+	"protoc-gen-rest/plugin/ts"
 
 	pgs "github.com/lyft/protoc-gen-star"
+	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 )
 
 func main() {
 	//for debug
 	// write data input to file for debug
-	// tsParser := parse.NewTsParser()
 	// data, _ := ioutil.ReadAll(os.Stdin)
 	// ioutil.WriteFile(".scalars.txt", data, 0644)
 
@@ -18,6 +20,7 @@ func main() {
 	// 	pgs.ProtocInput(os.Stdin),
 	// ).RegisterModule(
 	// 	gopl.GoGen(),
+	// 	ts.TsGen(parse.NewTsParser()),
 	// ).RegisterPostProcessor().Render()
 
 	f, _ := os.Open(".scalars.txt")
@@ -25,6 +28,8 @@ func main() {
 		pgs.ProtocInput(f),
 	).RegisterModule(
 		gopl.GoGen(),
-		// ts.TsGen(tsParser),
-	).RegisterPostProcessor().Render()
+		ts.TsGen(parse.NewTsParser()),
+	).RegisterPostProcessor(
+		pgsgo.GoFmt(),
+	).Render()
 }

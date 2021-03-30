@@ -2,7 +2,9 @@ syntax="proto3";
 // import "protos/data/student/student.proto";
 import "protos/kitchen/custom_option.proto";
 import "protos/data/student/student.proto";
+
 package scalars;
+option go_package = "data/scalars";
 
 message Scalars {
     // double double = 1;

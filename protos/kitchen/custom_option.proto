@@ -3,6 +3,9 @@ syntax = "proto3";
 import "google/protobuf/descriptor.proto";
 package base;
 
+option go_package = "data/scalars";
+
+
 extend google.protobuf.MethodOptions {
   optional string Secured = 50007; //role type check
 }

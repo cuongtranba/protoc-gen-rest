@@ -1,13 +1,21 @@
 package gopl
 
+type MyEnum string
+
+const (
+	MyEnumEmon MyEnum = "123"
+)
+
 var goTemplate = `
 package {{	.ProtoFileName}}
 
 {{-	if ne (len .Imports) 0 }}
 import (
+	"net/http"
 	{{-	range .Imports}}
-	{{	.PackageName}}	{{	.PackagePath}}
+	{{	.PackageName}}	"{{.PackagePath}}"
 	{{-	end}}
+	"github.com/labstack/echo/v4"
 )
 {{-	end }}
 
@@ -24,13 +32,22 @@ type {{.Name}} struct {
 	
 	{{-	end}}
 }
-{{end}}
+{{-	end}}
+
+{{-	range $i, $enumValue := .Enums}}
+	type {{$enumValue.Name}} string
+	const (
+		{{-	range $i, $value := $enumValue.Fields}}
+			{{$value}}{{$enumValue.Name}} {{$enumValue.Name}} = "{{$value}}"
+		{{-	end}}
+	)
+{{-	end}}
 
 {{-	if ne (len .Services) 0 }}
 	{{-	range .Services}}
 		type {{	.Name}} interface {
 			{{-	range .Methods}}
-				{{.Name}}(c echo.Context, request {{.Request}}) (err error, response {{.Response}})
+				{{.Name}}(c echo.Context, request {{.Request}}) (*{{.Response}}, error)
 			{{-	end}}
 		}
 		func Init{{.Name}}HandlerRouter(e *echo.Echo, handler {{.Name}}) {
@@ -43,13 +60,13 @@ type {{.Name}} struct {
 						"error": err.Error(),
 					})
 				}
-				err, response := handler.{{.Name}}(c, model)
+				res,err := handler.{{.Name}}(c, model)
 				if err != nil {
 					return c.JSON(http.StatusBadRequest, map[string]interface{}{
 						"error": err.Error(),
 					})
 				}
-				return c.JSON(http.StatusOK, response)
+				return c.JSON(http.StatusOK, res)
 			})
 			{{-	end}}
 		}
