@@ -7,7 +7,6 @@ import (
 	"protoc-gen-rest/plugin/ts"
 
 	pgs "github.com/lyft/protoc-gen-star"
-	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 )
 
 func main() {
@@ -16,20 +15,20 @@ func main() {
 	// data, _ := ioutil.ReadAll(os.Stdin)
 	// ioutil.WriteFile(".scalars.txt", data, 0644)
 
-	// pgs.Init(
-	// 	pgs.ProtocInput(os.Stdin),
-	// ).RegisterModule(
-	// 	gopl.GoGen(),
-	// 	ts.TsGen(parse.NewTsParser()),
-	// ).RegisterPostProcessor().Render()
-
-	f, _ := os.Open(".scalars.txt")
 	pgs.Init(
-		pgs.ProtocInput(f),
+		pgs.ProtocInput(os.Stdin),
 	).RegisterModule(
 		gopl.GoGen(),
 		ts.TsGen(parse.NewTsParser()),
-	).RegisterPostProcessor(
-		pgsgo.GoFmt(),
-	).Render()
+	).RegisterPostProcessor().Render()
+
+	// f, _ := os.Open(".scalars.txt")
+	// pgs.Init(
+	// 	pgs.ProtocInput(f),
+	// ).RegisterModule(
+	// 	gopl.GoGen(),
+	// 	ts.TsGen(parse.NewTsParser()),
+	// ).RegisterPostProcessor(
+	// 	pgsgo.GoFmt(),
+	// ).Render()
 }

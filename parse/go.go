@@ -28,7 +28,6 @@ func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 			fieldDescriptor := protoField.Descriptor()
 			field := model.Field{
 				Name:       fieldDescriptor.GetName(),
-				IsOption:   model.IsNullable(protoField),
 				IsRepeated: protoField.Type().IsRepeated(),
 				TypeName:   strings.ReplaceAll(goParser.ctx.Type(protoField).String(), "*", ""),
 				Tag:        fmt.Sprintf("`%s`", model.Tag(protoField)),
@@ -48,7 +47,7 @@ func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 
 	for _, packageImport := range f.Imports() {
 		packageName := goParser.ctx.PackageName(packageImport)
-		if packageName == "base" || packageName == pgs.Name(templateData.GoPackageName) {
+		if packageName == "base" || packageName.String() == templateData.ProtoFileName {
 			continue
 		}
 		templateData.Imports = append(templateData.Imports, model.Import{

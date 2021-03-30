@@ -1,0 +1,1 @@
+protoc --plugin protoc-gen-rest  --rest_out=import_prefix=protoc-gen-rest/:./ --rest_opt=paths=./  protos/handler/scalars/scalars.proto protos/handler/student/student.proto
