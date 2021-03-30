@@ -1,4 +1,4 @@
-import { AxiosAdapter, AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 import * as student from "./student";
 export interface Scalars {
   double: number;
@@ -26,13 +26,17 @@ export interface User {
   Age: string;
 }
 
-export const getUser = (client: AxiosInstance) => async (
-  request: User
-): Promise<AxiosResponse<Scalars>> => {
-  const result = await client.post("/getuser", request);
+export const getUser = (
+  client: AxiosInstance,
+  config?: AxiosRequestConfig
+) => async (request: User): Promise<AxiosResponse<Scalars>> => {
+  const result = await client.post("/getuser", request, config);
   return result.data;
 };
 
-export const UserService = (client: AxiosInstance) => {
-  getUser: getUser(client);
+export const UserService = (
+  client: AxiosInstance,
+  config?: AxiosRequestConfig
+) => {
+  getUser: getUser(client, config);
 };

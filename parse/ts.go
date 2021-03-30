@@ -52,6 +52,9 @@ func (ts *TsParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 	}
 
 	for _, packageImport := range f.Imports() {
+		if packageImport.Package().ProtoName().String() == "base" {
+			continue
+		}
 		templateData.Imports = append(templateData.Imports, model.Import{
 			PackagePath: packageImport.File().InputPath().SetExt("").String(),
 			PackageName: packageImport.Package().ProtoName().String(),

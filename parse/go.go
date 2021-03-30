@@ -48,7 +48,7 @@ func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 
 	for _, packageImport := range f.Imports() {
 		packageName := goParser.ctx.PackageName(packageImport)
-		if packageName == "base" {
+		if packageName == "base" || packageName == pgs.Name(templateData.GoPackageName) {
 			continue
 		}
 		templateData.Imports = append(templateData.Imports, model.Import{
