@@ -42,6 +42,6 @@ func (p *TsModule) generate(f pgs.File) {
 		return
 	}
 	templateData := p.tsParser.GetTemplateInfo(f)
-	name := f.InputPath().SetExt(".d.ts").String()
+	name := f.InputPath().SetExt(".ts").String()
 	p.AddGeneratorTemplateFile(name, p.tpl, templateData)
 }

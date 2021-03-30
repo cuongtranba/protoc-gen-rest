@@ -19,8 +19,8 @@ func NewGoParser(ctx pgsgo.Context) Parser {
 
 func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 	templateData := model.TemplateData{
-		ProtoFileName: goParser.ctx.PackageName(f).String(),
-		GoPackageName: *f.Descriptor().Options.GoPackage,
+		GoPackageName: goParser.ctx.PackageName(f).String(),
+		ProtoFileName: f.File().Name().String(),
 	}
 	for _, m := range f.AllMessages() {
 		var fields []model.Field
@@ -47,7 +47,7 @@ func (goParser *GoParser) GetTemplateInfo(f pgs.File) model.TemplateData {
 
 	for _, packageImport := range f.Imports() {
 		packageName := goParser.ctx.PackageName(packageImport)
-		if packageName == "base" || packageName.String() == templateData.ProtoFileName {
+		if packageName == "base" || packageName.String() == templateData.GoPackageName {
 			continue
 		}
 		templateData.Imports = append(templateData.Imports, model.Import{
